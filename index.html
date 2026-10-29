@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f68b1e">
+<title>ShopZone Kenya | Online Shopping</title>
+<style>
+:root{--orange:#f68b1e;--orange-dark:#d96b00;--ink:#252a34;--muted:#697386;--bg:#f4f5f7;--line:#e7e9ee;--green:#16804a}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{color:inherit}
+.topbar{background:var(--orange);color:#fff;padding:14px 4%;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.logo{font-size:25px;font-weight:800;letter-spacing:-.5px;white-space:nowrap}
+.logo span{color:#252a34}
+.search{display:flex;flex:1;min-width:220px;max-width:680px}
+.search input{min-width:0;flex:1;padding:12px;border:0;border-radius:6px 0 0 6px;outline:none}
+.search button{border:0;background:#252a34;color:#fff;padding:0 18px;border-radius:0 6px 6px 0}
+.cart-top{border:0;border-radius:6px;background:#fff;color:#252a34;padding:12px;font-weight:bold;white-space:nowrap}
+.nav{background:#fff;display:flex;gap:8px;align-items:center;padding:10px 4%;overflow-x:auto;border-bottom:1px solid var(--line)}
+.nav button{border:0;background:transparent;padding:8px 12px;border-radius:20px;white-space:nowrap;color:#394150}
+.nav button.active,.nav button:hover{background:#fff0df;color:#a84e00}
+.hero{max-width:1200px;margin:18px auto 12px;padding:0 16px}
+.hero-inner{border-radius:12px;padding:26px;background:linear-gradient(115deg,#272c35,#424955);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.hero h1{margin:0 0 10px;font-size:clamp(24px,4vw,38px)}
+.hero p{margin:0;line-height:1.55;color:#e6e9ef;max-width:560px}
+.hero .hero-emoji{font-size:clamp(50px,9vw,88px)}
+.pill{display:inline-block;margin-bottom:10px;background:#ffdfb8;color:#7c3c00;border-radius:20px;padding:6px 10px;font-size:12px;font-weight:bold}
+main{max-width:1200px;margin:auto;padding:0 16px 32px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:22px 0 14px}
+.section-head h2{font-size:21px;margin:0}
+.muted{color:var(--muted);font-size:13px}
+.products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.product{background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px;display:flex;flex-direction:column;min-width:0}
+.product-art{height:135px;border-radius:8px;background:#fff5e9;display:flex;align-items:center;justify-content:center;font-size:58px;margin-bottom:12px}
+.product h3{font-size:15px;line-height:1.4;margin:0 0 7px}
+.product .desc{font-size:12px;color:var(--muted);line-height:1.5;min-height:35px}
+.price{font-weight:800;font-size:18px;margin:10px 0 4px}
+.stock{font-size:12px;color:var(--green);margin-bottom:9px}
+.btn{border:0;border-radius:6px;background:var(--orange);color:#fff;font-weight:700;padding:11px 13px}
+.btn:hover{background:var(--orange-dark)}
+.btn.dark{background:#252a34}
+.btn.light{background:#eef0f4;color:#303744}
+.btn.full{width:100%}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(290px,350px);gap:16px;align-items:start;margin-top:24px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px;min-width:0}
+.panel h2,.panel h3{margin:0 0 14px}
+.cart-line{display:grid;grid-template-columns:1fr auto;gap:8px;padding:13px 0;border-bottom:1px solid var(--line)}
+.cart-line:last-child{border-bottom:0}
+.cart-name{font-weight:700;font-size:14px}
+.cart-meta{font-size:12px;color:var(--muted);margin-top:5px}
+.cart-actions{display:flex;align-items:center;gap:7px;margin-top:8px}
+.qty{width:30px;height:30px;border:1px solid var(--line);border-radius:5px;background:#fff}
+.remove{border:0;background:transparent;color:#b42318;font-size:12px;margin-left:5px}
+.line-total{font-weight:bold;white-space:nowrap;font-size:14px}
+.total-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0}
+.total-row.grand{border-top:1px solid var(--line);margin-top:6px;padding-top:14px;font-size:18px;font-weight:800}
+.field{margin:12px 0}
+.field label{display:block;font-size:13px;font-weight:bold;margin-bottom:6px}
+.field input,.field textarea,.field select{width:100%;border:1px solid #cfd4dd;border-radius:6px;padding:11px;background:#fff}
+.field textarea{min-height:75px;resize:vertical}
+.notice{border-radius:7px;padding:12px;background:#fff4dc;color:#774600;font-size:12px;line-height:1.55;margin:12px 0}
+.success{background:#e8f7ee;color:#17683e;border-radius:7px;padding:13px;line-height:1.5;font-size:13px;margin-top:12px}
+.error{color:#b42318;font-size:13px;line-height:1.5;margin:10px 0}
+.small{font-size:12px;color:var(--muted);line-height:1.55}
+footer{background:#252a34;color:#e6e9ef;padding:28px 5%;margin-top:20px}
+.footer-grid{max-width:1168px;margin:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+footer h3{color:#fff;font-size:15px}
+footer p{font-size:12px;line-height:1.7;color:#c4cad4}
+.hidden{display:none!important}
+.empty{font-size:13px;color:var(--muted);padding:14px 0}
+@media(max-width:850px){.products{grid-template-columns:repeat(3,minmax(0,1fr))}.layout{grid-template-columns:1fr}.cart-panel{order:0}}
+@media(max-width:560px){.topbar{padding:12px 4%;gap:10px}.logo{font-size:22px}.search{order:3;flex-basis:100%;max-width:none}.hero-inner{padding:20px}.hero .hero-emoji{font-size:48px}.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.product{padding:10px}.product-art{height:105px;font-size:47px}.product h3{font-size:14px}.price{font-size:16px}.footer-grid{grid-template-columns:1fr}.panel{padding:14px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="logo">ShopZone <span>Kenya</span></div>
+  <form class="search" id="searchForm">
+    <input id="searchInput" type="search" placeholder="Search phones, routers, accessories..." aria-label="Search products">
+    <button type="submit">Search</button>
+  </form>
+  <button class="cart-top" id="jumpCart">🛒 Cart (<span id="cartCount">0</span>)</button>
+</header>
+
+<nav class="nav" id="categoryNav" aria-label="Product categories">
+  <button class="active" data-category="All">All products</button>
+  <button data-category="Smartphones">Smartphones</button>
+  <button data-category="Electronics">Electronics</button>
+  <button data-category="Wi-Fi Routers">Wi-Fi routers</button>
+  <button data-category="Fiber Tools">Fiber tools</button>
+  <button data-category="Power Banks">Power banks</button>
+  <button data-category="Laptops">Laptops</button>
+  <button data-category="Accessories">Accessories</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <span class="pill">SHOP LOCAL · KENYA</span>
+      <h1>Good finds. Fair prices.</h1>
+      <p>Explore everyday electronics and networking gear. Add items to your cart and try our safe checkout demonstration.</p>
+    </div>
+    <div class="hero-emoji" aria-hidden="true">🛍️</div>
+  </div>
+</section>
+
+<main>
+  <div class="section-head">
+    <h2 id="listingTitle">Popular products</h2>
+    <span class="muted">Sample products · Prices in KSh</span>
+  </div>
+  <div class="products" id="productGrid"></div>
+
+  <div class="layout">
+    <section class="panel" id="checkoutPanel">
+      <h2>Checkout</h2>
+      <p class="small">Enter delivery details to preview a demo order. This page does not submit personal information to a server.</p>
+      <form id="checkoutForm">
+        <div class="field">
+          <label for="customerName">Customer name</label>
+          <input id="customerName" name="customerName" autocomplete="name" maxlength="80" required placeholder="Your name">
+        </div>
+        <div class="field">
+          <label for="customerPhone">Contact / M-PESA number</label>
+          <input id="customerPhone" name="customerPhone" type="tel" inputmode="tel" autocomplete="tel" value="0799655642" required placeholder="07XXXXXXXX">
+        </div>
+        <div class="field">
+          <label for="deliveryAddress">Delivery address</label>
+          <textarea id="deliveryAddress" name="deliveryAddress" maxlength="300" required placeholder="Town, area and delivery instructions"></textarea>
+        </div>
+        <div class="field">
+          <label for="paymentMethod">Payment method</label>
+          <select id="paymentMethod">
+            <option value="mpesa">M-PESA STK Push (demo)</option>
+            <option value="delivery">Pay on delivery (demo only)</option>
+          </select>
+        </div>
+        <div class="notice">
+          <strong>Payment safety:</strong> The demo button below does not send an STK Push. Never enter an M-PESA PIN, OTP, banking password, or card secret on this website.
+        </div>
+        <button class="btn full" type="submit">Continue with demo checkout</button>
+        <div id="formMessage" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <aside class="panel cart-panel" id="cartPanel">
+      <h2>Your cart</h2>
+      <div id="cartItems"><div class="empty">Your cart is empty. Add a product to get started.</div></div>
+      <div class="total-row"><span>Subtotal</span><strong id="subtotal">KSh 0</strong></div>
+      <div class="total-row"><span>Delivery (estimate)</span><strong id="deliveryFee">KSh 0</strong></div>
+      <div class="total-row grand"><span>Total</span><span id="grandTotal">KSh 0</span></div>
+      <p class="small">Delivery fee shown is a sample estimate and is not a real quote.</p>
+      <button class="btn full" id="checkoutButton">Go to checkout</button>
+      <button class="btn light full" id="clearCart" type="button">Clear cart</button>
+      <div id="orderResult" aria-live="polite"></div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div><h3>About ShopZone Kenya</h3><p>An independent sample online store project. It is not affiliated with Jumia or any other retailer.</p></div>
+    <div><h3>Delivery information</h3><p>Delivery options and charges should be confirmed with the store before a real purchase. This demo does not arrange deliveries.</p></div>
+    <div><h3>Returns and customer support</h3><p>Before launching a real shop, publish accurate support contacts, return conditions, privacy information and terms of sale.</p></div>
+  </div>
+</footer>
+
+<script>
+"use strict";
+
+const products = [
+ {id:1,name:"Android Smartphone",category:"Smartphones",price:15000,emoji:"📱",desc:"Everyday smartphone · Sample listing"},
+ {id:2,name:"Dual-Band Wi-Fi Router",category:"Wi-Fi Routers",price:3500,emoji:"📡",desc:"Home and small-office networking"},
+ {id:3,name:"20,000 mAh Power Bank",category:"Power Banks",price:2500,emoji:"🔋",desc:"Portable charging · Sample listing"},
+ {id:4,name:"Wireless Headphones",category:"Accessories",price:1800,emoji:"🎧",desc:"Wireless audio accessory"},
+ {id:5,name:"Fiber Optic Tool Kit",category:"Fiber Tools",price:4200,emoji:"🧰",desc:"Sample toolkit for fiber work"},
+ {id:6,name:"Ethernet Patch Cable",category:"Accessories",price:350,emoji:"🔌",desc:"Networking cable · Sample listing"},
+ {id:7,name:"Smart Watch",category:"Electronics",price:2800,emoji:"⌚",desc:"Wearable tech · Sample listing"},
+ {id:8,name:"Laptop Computer",category:"Laptops",price:45000,emoji:"💻",desc:"Laptop for work and study"},
+ {id:9,name:"Bluetooth Speaker",category:"Electronics",price:2200,emoji:"🔊",desc:"Portable audio speaker"},
+ {id:10,name:"GPON/XPON Router",category:"Wi-Fi Routers",price:4800,emoji:"🌐",desc:"Fiber internet customer equipment"},
+ {id:11,name:"USB-C Charger",category:"Accessories",price:950,emoji:"🔌",desc:"Charging accessory · Sample listing"},
+ {id:12,name:"Optical Power Meter",category:"Fiber Tools",price:6500,emoji:"🛠️",desc:"Fiber testing tool · Sample listing"}
+];
+
+const cart = new Map();
+let activeCategory = "All";
+let searchTerm = "";
+
+const kes = n => "KSh " + n.toLocaleString("en-KE");
+const productGrid = document.getElementById("productGrid");
+
+function renderProducts(){
+  const filtered = products.filter(p =>
+    (activeCategory === "All" || p.category === activeCategory) &&
+    (p.name + " " + p.category + " " + p.desc).toLowerCase().includes(searchTerm)
+  );
+  document.getElementById("listingTitle").textContent =
+    activeCategory === "All" ? "Popular products" : activeCategory;
+  productGrid.innerHTML = "";
+  if (!filtered.length){
+    productGrid.innerHTML = '<p class="empty">No products found. Try another search or category.</p>';
+    return;
+  }
+  filtered.forEach(p => {
+    const card = document.createElement("article");
+    card.className = "product";
+    const art = document.createElement("div");
+    art.className = "product-art";
+    art.setAttribute("aria-hidden","true");
+    art.textContent = p.emoji;
+    const title = document.createElement("h3");
+    title.textContent = p.name;
+    const desc = document.createElement("p");
+    desc.className = "desc";
+    desc.textContent = p.desc;
+    const price = document.createElement("div");
+    price.className = "price";
+    price.textContent = kes(p.price);
+    const stock = document.createElement("div");
+    stock.className = "stock";
+    stock.textContent = "Sample listing";
+    const btn = document.createElement("button");
+    btn.className = "btn full";
+    btn.type = "button";
+    btn.textContent = "Add to cart";
+    btn.addEventListener("click", () => addToCart(p.id));
+    card.append(art,title,desc,price,stock,btn);
+    productGrid.appendChild(card);
+  });
+}
+
+function addToCart(id){
+  cart.set(id,(cart.get(id)||0)+1);
+  renderCart();
+}
+function changeQty(id,delta){
+  const next=(cart.get(id)||0)+delta;
+  if(next<=0) cart.delete(id); else cart.set(id,next);
+  renderCart();
+}
+function removeItem(id){cart.delete(id);renderCart();}
+function getSubtotal(){
+  return [...cart.entries()].reduce((sum,[id,qty])=>{
+    const p=products.find(x=>x.id===id);
+    return sum+(p?p.price*qty:0);
+  },0);
+}
+function renderCart(){
+  const container=document.getElementById("cartItems");
+  container.innerHTML="";
+  let count=0;
+  cart.forEach(qty=>count+=qty);
+  document.getElementById("cartCount").textContent=count;
+  if(cart.size===0){
+    container.innerHTML='<div class="empty">Your cart is empty. Add a product to get started.</div>';
+  } else {
+    cart.forEach((qty,id)=>{
+      const p=products.find(x=>x.id===id);
+      if(!p)return;
+      const row=document.createElement("div");
+      row.className="cart-line";
+      const left=document.createElement("div");
+      const name=document.createElement("div");
+      name.className="cart-name";
+      name.textContent=p.name;
+      const meta=document.createElement("div");
+      meta.className="cart-meta";
+      meta.textContent=kes(p.price)+" each";
+      const actions=document.createElement("div");
+      actions.className="cart-actions";
+      const minus=document.createElement("button");
+      minus.className="qty";minus.type="button";minus.textContent="−";
+      minus.setAttribute("aria-label","Decrease "+p.name+" quantity");
+      minus.addEventListener("click",()=>changeQty(id,-1));
+      const q=document.createElement("span");q.textContent=qty;
+      const plus=document.createElement("button");
+      plus.className="qty";plus.type="button";plus.textContent="+";
+      plus.setAttribute("aria-label","Increase "+p.name+" quantity");
+      plus.addEventListener("click",()=>changeQty(id,1));
+      const remove=document.createElement("button");
+      remove.className="remove";remove.type="button";remove.textContent="Remove";
+      remove.addEventListener("click",()=>removeItem(id));
+      actions.append(minus,q,plus,remove);
+      left.append(name,meta,actions);
+      const total=document.createElement("div");
+      total.className="line-total";total.textContent=kes(p.price*qty);
+      row.append(left,total);container.appendChild(row);
+    });
+  }
+  const subtotal=getSubtotal();
+  const delivery=subtotal===0?0:(subtotal>=5000?0:250);
+  document.getElementById("subtotal").textContent=kes(subtotal);
+  document.getElementById("deliveryFee").textContent=kes(delivery);
+  document.getElementById("grandTotal").textContent=kes(subtotal+delivery);
+  document.getElementById("formMessage").textContent="";
+}
+function scrollToCheckout(){
+  document.getElementById("checkoutPanel").scrollIntoView({behavior:"smooth",block:"start"});
+}
+document.getElementById("categoryNav").addEventListener("click",e=>{
+  const btn=e.target.closest("button[data-category]");
+  if(!btn)return;
+  activeCategory=btn.dataset.category;
+  document.querySelectorAll("#categoryNav button").forEach(b=>b.classList.toggle("active",b===btn));
+  renderProducts();
+});
+document.getElementById("searchForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  searchTerm=document.getElementById("searchInput").value.trim().toLowerCase();
+  renderProducts();
+});
+document.getElementById("searchInput").addEventListener("input",e=>{
+  searchTerm=e.target.value.trim().toLowerCase();
+  renderProducts();
+});
+document.getElementById("jumpCart").addEventListener("click",()=>{
+  document.getElementById("cartPanel").scrollIntoView({behavior:"smooth"});
+});
+document.getElementById("checkoutButton").addEventListener("click",scrollToCheckout);
+document.getElementById("clearCart").addEventListener("click",()=>{
+  cart.clear();renderCart();
+  document.getElementById("orderResult").textContent="";
+});
+document.getElementById("checkoutForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const message=document.getElementById("formMessage");
+  const result=document.getElementById("orderResult");
+  message.className="";message.textContent="";result.innerHTML="";
+  if(cart.size===0){
+    message.className="error";
+    message.textContent="Your cart is empty. Add a product before checkout.";
+    return;
+  }
+  const name=document.getElementById("customerName").value.trim();
+  const phone=document.getElementById("customerPhone").value.replace(/[\s-]/g,"");
+  const address=document.getElementById("deliveryAddress").value.trim();
+  const validPhone=/^(?:\+254|254|0)?7\d{8}$/.test(phone);
+  if(name.length<2){
+    message.className="error";message.textContent="Please enter a valid customer name.";return;
+  }
+  if(!validPhone){
+    message.className="error";message.textContent="Enter a valid Kenyan mobile number, for example 0799655642.";return;
+  }
+  if(address.length<5){
+    message.className="error";message.textContent="Please enter a delivery address.";return;
+  }
+  const method=document.getElementById("paymentMethod").value;
+  const total=getSubtotal()+(getSubtotal()>=5000?0:250);
+  const orderRef="DEMO-"+Math.random().toString(36).slice(2,8).toUpperCase();
+  result.className="success";
+  result.textContent = method==="mpesa"
+    ? "DEMO CHECKOUT ONLY — Order reference "+orderRef+". Total "+kes(total)+". No M-PESA STK Push was sent and no payment was made. To accept real payments, connect a secure server to Safaricom Daraja."
+    : "DEMO ORDER ONLY — Order reference "+orderRef+". Total "+kes(total)+". No order was transmitted and no payment was taken.";
+  result.scrollIntoView({behavior:"smooth",block:"nearest"});
+});
+
+renderProducts();
+renderCart();
+</script>
+</body>
+        </html>
+        
